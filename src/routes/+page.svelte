@@ -119,6 +119,7 @@
 
     .word {
         font-size: 1.5rem;
+        margin: 1rem;
     }
     .card-image {
         max-width: 100px;
