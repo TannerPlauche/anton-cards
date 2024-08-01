@@ -32,7 +32,7 @@
         // console.log("voices: ", voices);
         voice = voices.find((voice) => voice.name === "Aaron");
         const body = document.getElementsByTagName("body")[0];
-        body.style.backgroundColor = "#dfe6e5";
+        body.style.backgroundColor = "#f7faf8";
     });
 
     /**
@@ -103,6 +103,7 @@
     .word-list {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
     }
     .card {
         min-width: 15%;
