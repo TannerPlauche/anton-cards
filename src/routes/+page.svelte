@@ -122,6 +122,11 @@
         margin: 1rem;
     }
     .card-image {
-        max-width: 100px;
+        width: 100px;
+    }
+    @media only screen and (max-width: 600px) {
+        .card-image {
+            width: 50px;
+        }
     }
 </style>

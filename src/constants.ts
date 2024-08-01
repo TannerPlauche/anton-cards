@@ -36,6 +36,7 @@ export const words = [
                 { word: 'game', fileName: 'game.svg' },
                 { word: 'lightswitch', fileName: 'lightswitch.svg' },
                 { word: 'tv', fileName: 'tv.svg' },
+                { word: 'tablet', fileName: 'tablet.svg' },
             ]
         },
         {
