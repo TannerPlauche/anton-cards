@@ -3,7 +3,7 @@
 export const API_KEY = 'gHSHZMiAYoOrnYflStpy9XVHlcbauG57lbVdVn4DyY54JOksQL6GdonClp2G1G4V';
 export const DATABASE = 'sample_mflix';
 
-export const words = [
+export const wordGroups = [
         {
             groupName: 'Basic',
             words: [

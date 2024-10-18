@@ -1,74 +1,62 @@
-<script>
-    import { afterUpdate, onMount } from "svelte";
-    // import { wordGroups } from "../constants.js";
+<script lang="ts">
+    // import { afterUpdate, onMount } from "svelte";
+    // import IconService from "../lib/services/icon.service";
+    import { goto } from "$app/navigation";
+    import Button, { Label } from "@smui/button";
+    import Dialog, { Title, Content, Actions } from "@smui/dialog";
+    import Textfield from "@smui/textfield";
+    import HelperText from "@smui/textfield/helper-text";
+    import axios from "axios";
+    // import { createSpeechBoard } from "$lib/services/speech-board.service";
+    // import { createBoard } from "./+page.server";
 
-    export let data;
-    console.log("data: ", data);
-    /**
-     * @type {SpeechSynthesisVoice[]}
-     */
-    let voices = [];
-    /**
-     * @type {SpeechSynthesisVoice}
-     */
-    let voice;
-    function getVoices() {
-        return new Promise((resolve, reject) => {
-            let id;
+    let open = false;
+    let newBoardName = "";
 
-            id = setInterval(() => {
-                if (window.speechSynthesis.getVoices().length !== 0) {
-                    resolve(window.speechSynthesis.getVoices());
-                    clearInterval(id);
-                }
-            }, 10);
-        });
+    const toggleDialog = () => (open = !open);
+
+    async function createNewBoard() {
+        const response = await axios.post("/", { name: newBoardName });
+        const newBoard = response.data;
+        console.log("newBoard: ", newBoard);
+        console.log(newBoard._id);
+        toggleDialog();
+        goto(`/board?boardid=${newBoard._id}`);
     }
 
-    onMount(async () => {
-        voices = await getVoices();
-        // console.log("voiceResults: ", voices);
-        // voices = voiceResults;
-        // console.log("voices: ", voices);
-        voice = voices.find((voice) => voice.name === "Aaron");
-        const body = document.getElementsByTagName("body")[0];
-        body.style.backgroundColor = "#f7faf8";
-    });
-
-    /**
-     * @param {string} text
-     */
-    function speak(text) {
-        var msg = new SpeechSynthesisUtterance();
-        msg.text = text;
-        msg.voice = voice;
-        window.speechSynthesis.speak(msg);
+    function goToBoardList() {
+        goto("/board-list");
     }
 </script>
 
-<h2 class="header">Talk Board</h2>
-<div class="voice-selector">
-    <select name="voices" id="voiceSelector" bind:value={voice}>
-        {#each voices as voice}
-            <option value={voice}>{voice.name}</option>
-        {/each}
-    </select>
-</div>
-<div class="board">
-    {#each data.wordGroups as wordGroup}
-        <div class="word-group">
-            <h4 class="group-name">{wordGroup.groupName}</h4>
-            <div class="word-list">
-                {#each wordGroup.words as word}
-                    <div class="card" on:click={() => speak(word.word)}>
-                        <p class="word">{word.word}</p>
-                        <img class="card-image" src="/{word.fileName}" alt="" />
-                    </div>
-                {/each}
-            </div>
-        </div>
-    {/each}
-</div>
+<main class="header">
+    <div>Speech Boards</div>
+    <Button variant="raised" on:click={goToBoardList}>See Boards</Button>
+    <Button variant="raised" on:click={toggleDialog}>Create Board</Button>
+    <Dialog
+        bind:open
+        aria-labelledby="large-scroll-title"
+        aria-describedby="large-scroll-content"
+        surface$style="width: 850px; max-width: calc(100vw - 32px);"
+    >
+        <Title>Create Board</Title>
+        <Content>
+            <!-- <Textfield label="Board Name" />
+            <HelperText>Enter a name for your board</HelperText> -->
+            <Textfield
+                class="search-input"
+                bind:value={newBoardName}
+                label="New Board Name"
+            >
+                <HelperText slot="helper">New Board Name</HelperText>
+            </Textfield>
+        </Content>
+        <Actions>
+            <Button variant="raised" on:click={toggleDialog}>Cancel</Button>
+            <Button variant="raised" on:click={createNewBoard}>Create</Button>
+        </Actions>
+    </Dialog>
+</main>
 
 <style lang="postcss">
     :global(body) {
@@ -128,5 +116,27 @@
         .card-image {
             width: 50px;
         }
+    }
+
+    .preview {
+        width: 100px;
+        margin: 0.5rem;
+    }
+
+    .icon-search {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .search-inputs {
+        display: flex;
+        justify-content: space-evenly;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid lightcoral;
+    }
+
+    .search-input {
+        margin: 0.5 rem;
     }
 </style>

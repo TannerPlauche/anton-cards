@@ -10,6 +10,9 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
+		"@smui/button": "^7.0.0",
+		"@smui/dialog": "^7.0.0",
+		"@smui/textfield": "^7.0.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
@@ -23,6 +26,9 @@
 	"dependencies": {
 		"@flaticon/flaticon-uicons": "^3.3.1",
 		"axios": "^1.7.2",
-		"mongoose": "^8.5.2"
+		"mongoose": "^8.7.1",
+		"oauth": "^0.10.0",
+		"svelte-material-ui": "^7.0.0",
+		"url-parse": "^1.5.10"
 	}
 }
