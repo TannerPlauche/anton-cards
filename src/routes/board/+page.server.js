@@ -1,10 +1,9 @@
 // import { wordGroups } from '../constants;
 
-import axios from 'axios';
-import { wordGroups } from '../../constants';
+// import axios from 'axios';
+// import { wordGroups } from '../../constants';
 import { getBaseBoard, getBoardById } from '$lib/services/speech-board.service';
 
-// /** @type {import('./$types').PageLoad} */
 /** @type {import('./$types').PageServerLoad} */
 
 export async function load({ params, url }) {
